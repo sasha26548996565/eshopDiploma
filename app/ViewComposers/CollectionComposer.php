@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ViewComposers;
 
-use App\Models\Product;
+use App\Models\Collection;
 use Illuminate\Contracts\View\View;
 
-class ProductComposer implements ComposerContract
+class CollectionComposer implements ComposerContract
 {
     public function compose(View $view): View
     {
-        return $view->with('products', Product::latest()->get());
+        return $view->with('collections', Collection::latest()->get());
     }
 }

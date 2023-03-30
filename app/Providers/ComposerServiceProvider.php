@@ -1,30 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\ViewComposers\ProductComposer;
+use App\ViewComposers\CategoryComposer;
+use Illuminate\Support\ServiceProvider;
+use App\ViewComposers\CollectionComposer;
 
 class ComposerServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+    public function boot(): void
     {
-        //
-    }
-
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
+        View::composer('includes.left_panel.categories', CategoryComposer::class);
+        View::composer('includes.left_panel.categories', CollectionComposer::class);
         View::composer('includes.product_gallery', ProductComposer::class);
     }
 }

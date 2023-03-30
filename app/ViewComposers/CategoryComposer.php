@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ViewComposers;
 
-use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Contracts\View\View;
 
-class ProductComposer implements ComposerContract
+class CategoryComposer implements ComposerContract
 {
     public function compose(View $view): View
     {
-        return $view->with('products', Product::latest()->get());
+        return $view->with('categories', Category::latest()->get());
     }
 }
