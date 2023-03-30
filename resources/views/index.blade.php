@@ -38,10 +38,7 @@
                         <button class="slider-button-right"></button>
                     </div>
 
-                    <!--Здесь была Сортировка галереи товаров-->
-
-                   <!--  <ul class="shop_gallery"> здесь была Галерея товаров-->
-                   @include('includes.product_gallery')
+                   @include('includes.gallery.index', $products)
 
                 </section>
             </div>

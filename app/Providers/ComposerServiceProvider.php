@@ -16,6 +16,5 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('includes.left_panel.categories', CategoryComposer::class);
         View::composer('includes.left_panel.categories', CollectionComposer::class);
-        View::composer('includes.product_gallery', ProductComposer::class);
     }
 }

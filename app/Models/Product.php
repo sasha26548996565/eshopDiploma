@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Category;
 use App\Models\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -31,5 +32,26 @@ class Product extends Model
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class, 'collection_id', 'id');
+    }
+
+    public function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value / 100
+        );
+    }
+
+    public function issetDiscount(): bool
+    {
+        return $this->discount == 0 ? false : true;
+    }
+
+    public function getPriceWithDiscount(): float
+    {
+        if ($this->discount == 0)
+            return $this->price;
+
+        $priceWithDiscount = $this->price - ($this->price * $this->discount / 100);
+        return $priceWithDiscount;
     }
 }
