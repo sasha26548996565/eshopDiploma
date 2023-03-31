@@ -16,7 +16,7 @@ class ProductFactory extends Factory
             'article' => $this->faker->unique()->word(),
             'title' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'price' => random_int(10000, 10000000),
+            'price' => random_int(10000, 1000000),
             'count' => mt_rand(1, 11),
             'properties' => [
                 'height' => 25, 'Color' => 'White'
