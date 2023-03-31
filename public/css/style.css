@@ -19,17 +19,17 @@
     src: url(../fonts/Bellota/Bellota-Bold.ttf);
     font-weight: bold;
   }
-  
+
 
 @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Bellota:wght@700&display=swap');
 
 @font-face {font-family: "Trebuchet MS";
-    src: url(../fonts/TrebuchetMS/trebuchetms.ttf) format("truetype"); 
+    src: url(../fonts/TrebuchetMS/trebuchetms.ttf) format("truetype");
   }
 
 a {
     text-decoration: none;
-}  
+}
 
 body {
     min-height: 100vh;
@@ -41,7 +41,7 @@ body {
 
 header{
     border-bottom: 1px solid red;
-    
+
 }
 
 .wrapper {
@@ -52,7 +52,7 @@ header{
 
 .header-top{
     width: 100%;
-    height: 30px;
+    height: 70px;
     background-color: #eee;
     background-repeat: no-repeat;
     color: #484848;
@@ -63,18 +63,17 @@ header{
     font-family: 'Trebuchet MS', sans-serif;
 }
 
-.header-top .header-top-phone{    
+.header-top .header-top-phone{
     margin-right: 70px;
-    font-size: 16px;    
+    font-size: 16px;
     position: relative;
 }
 
 .header-top .header-top-phone::before{
     content: '';
-    background-image: url(../images/phone.svg);
     position: absolute;
     background-size: cover;
-    left: -20px; 
+    left: -20px;
     /* display: inline; */
     height: 17px;
     width: 11px;
@@ -83,9 +82,9 @@ header{
     margin-right: 4px;
 }
 
-.header-top .header-top-email{    
+.header-top .header-top-email{
     margin-right: 40px;
-    font-size: 16px;    
+    font-size: 16px;
     position: relative;
 }
 
@@ -94,7 +93,7 @@ header{
     background-image: url(../images/mail-icon-header.svg);
     position: absolute;
     background-size: cover;
-    left: -30px; 
+    left: -30px;
     /* display: inline; */
     height: 12px;
     width: 17px;
@@ -106,8 +105,8 @@ header{
 /* Средний header с картинкой и лого */
 .header-center{
     width: 100%;
-    height: 180px; 
-    max-height: 180px;   
+    height: 180px;
+    max-height: 180px;
 }
 
 .header-center-wrap{
@@ -207,7 +206,7 @@ header{
  .profile-basket .burger-menu {
     display: none;
  }
- 
+
 .profile-basket .burger-menu img {
     height: 25px;
     width: 35px;

@@ -18,19 +18,16 @@
             @if ($product->issetDiscount())
                 <div class="price-product">
                     <p class="initial-price-product">
-                        <span class="initial-price-product-amount">{{ $product->price }}</span>
-                        <span class="initial-price-product-currency"> р.</span>
+                        <span class="initial-price-product-amount">{{ currency($product->price, 'USD', currency()->getUserCurrency()) }}</span>
                     </p>
                     <p class="final-price-product">
-                        <span class="final-price-product-amount">{{ $product->getPriceWithDiscount() }}</span>
-                        <span class="final-price-product-currency"> р.</span>
+                        <span class="final-price-product-amount">{{ currency($product->getPriceWithDiscount(), 'USD', currency()->getUserCurrency()) }}</span>
                     </p>
                 </div>
             @else
                 <div class="price-product">
                     <p class="final-price-product">
-                        <span class="final-price-product-amount">{{ $product->price }}</span>
-                        <span class="final-price-product-currency"> р.</span>
+                        <span class="final-price-product-amount">{{ currency($product->price, 'USD', currency()->getUserCurrency()) }}</span>
                     </p>
                 </div>
             @endif
