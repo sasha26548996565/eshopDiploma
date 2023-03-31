@@ -24,6 +24,8 @@ class Product extends Model
         'properties' => 'array',
     ];
 
+    public const ALLOWED_SORTING = ['title', 'price'];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
