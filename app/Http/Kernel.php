@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             \Torann\Currency\Middleware\CurrencyMiddleware::class,
+            'localization' => \App\Http\Middleware\LocalizationMiddleware::class,
         ],
 
         'api' => [

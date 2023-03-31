@@ -9,8 +9,8 @@
                     </div>
                     <div class="select-field">
                         <select class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
+                            <option value="">change</option>
                             @foreach (currency()->getCurrencies() as $currency)
-                                <option value="">change</option>
                                 <option value="{{ route('main.switchCurrency', $currency['code']) }}">
                                     {{ $currency['code'] }} {{ $currency['symbol'] }}
                                 </option>
@@ -26,11 +26,13 @@
                     <div class="langMenuLbl">Language <div class="language--flag de_DE">Deutsch</div>
                     </div>
                     <div class="select-field">
-                        <select name="__shop" class="language--select" data-auto-submit="true">
-                            <option value="1" selected="selected"> Deutsch </option>
-                            <option value="4"> Englisch </option>
+                        <select name="__shop" class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
+                            <option value="">change</option>
+                            @foreach (config('app.languages') as $language)
+                                <option value="{{ route('main.switchLanguage', $language) }}">{{ $language }}</option>
+                            @endforeach
                         </select>
-                    </div> <input type="hidden" name="__redirect" value="1">
+                    </div>
                 </div>
             </form>
         </span>
@@ -91,7 +93,7 @@
                 <ul class="horizont-menu menu__list">
                     <li>
                         <div class="menu__wrapper">
-                            <p class="menu__link">Каталог</p>
+                            <p class="menu__link">{{ __('header.catalog') }}</p>
                             <span class="menu__arrow"></span>
                         </div>
                         <ul class="menu__sublist">
@@ -124,9 +126,9 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#" class="menu__link">Акции</a></li>
-                    <li><a href="#" class="menu__link">Доставка и оплата</a></li>
-                    <li><a href="#" class="menu__link">Контакты</a></li>
+                    <li><a href="#" class="menu__link">{{ __('header.stock') }}</a></li>
+                    <li><a href="#" class="menu__link">{{ __('header.delivery') }}</a></li>
+                    <li><a href="#" class="menu__link">{{ __('header.contacts') }}</a></li>
                     <li class="profile-hidden">
                         <div class="menu__wrapper">
                             <a href="#" class="menu__link">Мой профиль</a>
@@ -145,8 +147,8 @@
             <!-- Header: Горизонтальное меню: Поиск -->
             <div class="header-menu-search">
                 <form action="/search" method="get" class="search-form">
-                    <input type="search" name="sSearch" aria-label="Найти..." class="search-field"
-                        autocomplete="off" autocapitalize="off" placeholder="Найти..." />
+                    <input type="search" name="sSearch" aria-label="{{ __('header.search') }}" class="search-field"
+                        autocomplete="off" autocapitalize="off" placeholder="{{ __('header.search') }}" />
                     <button type="submit" name="" value="" class="search-submit">
                         <img class="search-image" src="images/search-icon.svg" alt="Go">
                     </button>
