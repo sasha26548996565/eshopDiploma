@@ -23,7 +23,7 @@ class IndexController extends Controller
 
     public function index(Request $request): View
     {
-        $products = Product::latest()->get();
+        $products = Product::latest()->paginate(6);
         if ($request->ajax())
         {
             $products = $this->sortService->sortProducts(explode('|', $request->sort));

@@ -16,3 +16,5 @@
 </div>
 
 @include('includes.gallery.products', $products)
+
+{{ $products->withQueryString()->links('includes.pagination') }}

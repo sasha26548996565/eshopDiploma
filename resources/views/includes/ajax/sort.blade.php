@@ -7,10 +7,7 @@
 
             jQuery.ajax({
                 method: "GET",
-                url: "{{ route('main.index') }}",
-                data: {
-                    sort: sort.val()
-                },
+                url: "{{ route('main.index') }}" + "?sort=" + sort.val(),
                 success: function (data) {
                     jQuery('#imgBlock').html(data);
                 }
