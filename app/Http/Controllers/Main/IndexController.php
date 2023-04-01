@@ -10,6 +10,7 @@ use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ProductFilter;
 use App\Services\SortService;
 
 class IndexController extends Controller
@@ -24,13 +25,15 @@ class IndexController extends Controller
     public function index(Request $request): View
     {
         $products = Product::latest()->paginate(6);
-        if (isset($request->sort))
-        {
-            $products = $this->sortService->sortProducts(explode('|', $request->sort));
-        }
 
         if ($request->ajax())
         {
+            $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter([
+                'sort' => $request->sort,
+                'categoryIds' => $request->categoryIds,
+                'collectionIds' => $request->collectionIds
+            ])]);
+            $products = Product::filter($filter)->paginate(6);
             return view('includes.gallery.products', compact('products'));
         }
 

@@ -1,7 +1,3 @@
-@section('custom_js')
-    @include('includes.ajax.sort')
-@endsection
-
 <div class="sorting-line-divider">
     <div class="sort-wrapper">
         <form action="/sort" method="get" class="sort-form">

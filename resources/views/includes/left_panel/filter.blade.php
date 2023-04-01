@@ -1,5 +1,4 @@
 <div class="filters">
-    <!-- левая панель: Фильтр -->
     <div class="list-box">
         <div class="title-box open">
             <p>Фильтр</p>
@@ -11,28 +10,18 @@
                 <p>Категория или коллекция</p>
             </div>
             <form class="left-form-filter" method="get"  action="">
-                <li>
-                    <input class="" type="checkbox" id="id_sheep" name="sheep">
-                    <label class="" for="id_sheep">Овечки Jolly Mäh</label>
-                </li>
-                <li>
-                    <input class="" type="checkbox" id="id_unicorn" name="unicorn">
-                    <label class="" for="id_unicorn">Единорог Theodor и его друзья</label>
-                </li>
-                <li>
-                    <input class="" type="checkbox" id="id_forest" name="forest">
-                    <label class="" for="id_forest">Лесные жители</label>
-                </li>
-                <li>
-                    <input class="" type="checkbox" id="id_wild" name="wild">
-                    <label class="" for="id_wild">Дикие обитатели</label>
-                </li>
-                <li>
-                    <input class="" type="checkbox" id="id_farm" name="farm">
-                    <label class="" for="id_farm">Веселая ферма</label>
-                </li>
-            <!-- </form> -->
-            <!-- левая панель: Фильтр по цене -->
+                @foreach ($categories as $category)
+                    <li>
+                        <input class="category" type="checkbox" data-id="{{ $category->id }}" id="id_sheep">
+                        <label class="" for="id_sheep">{{ $category->name }}</label>
+                    </li>
+                @endforeach
+                @foreach ($collections as $collection)
+                    <li>
+                        <input class="collection" type="checkbox" data-id="{{ $collection->id }}" id="id_sheep">
+                        <label class="" for="id_sheep">{{ $collection->name }}</label>
+                    </li>
+                @endforeach
                 <div class="filter-price">
                     <div class="left-filter-title">
                         <p>Цена</p>

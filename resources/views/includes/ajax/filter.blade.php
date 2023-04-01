@@ -2,7 +2,6 @@
     jQuery(document).ready(function () {
         let
             filterButton = jQuery('.apply-filter'),
-            sort = jQuery('#sort'),
             categoryIds = [],
             collectionIds = [];
         filterButton.click(function (event) {
@@ -23,29 +22,10 @@
                 method: "GET",
                 url: "{{ route('main.index') }}",
                 data: {
-                    sort: sort.val(),
                     categoryIds: categoryIds,
-                    collectionIds: collectionIds,
-                    page: {{ $_GET['page'] ?? 1 }}
+                    collectionIds: collectionIds
                 },
                 success: function (data) {
-                    let
-                        positionParameters = location.pathname.indexOf('?'),
-                        url = location.pathname.substring(positionParameters, location.pathname.length),
-                        newUrl = url + '?';
-                    newUrl += 'sort=' + sort.val() + '&page=' + {{ $_GET['page'] ?? 1 }};
-                    if (categoryIds.length > 0)
-                    {
-                        newUrl += '&categoryIds=' + categoryIds;
-                    }
-                    if (collectionIds.legnth > 0)
-                    {
-                        newUrl += '&collectionIds=' + collectionIds;
-                    }
-                    jQuery(".pagination ul li a").each((_, el) => {
-                        el.href = newUrl;
-                    });
-                    history.pushState({}, '', newUrl);
                     jQuery('#imgBlock').html(data);
                 }
             });
