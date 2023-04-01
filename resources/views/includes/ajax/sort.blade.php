@@ -26,7 +26,6 @@
                     sort: sort.val(),
                     categoryIds: categoryIds,
                     collectionIds: collectionIds,
-                    page: {{ $_GET['page'] ?? 1 }}
                 },
                 success: function (data) {
                     let
@@ -38,7 +37,7 @@
                     {
                         newUrl += '&categoryIds=' + categoryIds;
                     }
-                    if (collectionIds.legnth > 0)
+                    if (collectionIds.length > 0)
                     {
                         newUrl += '&collectionIds=' + collectionIds;
                     }

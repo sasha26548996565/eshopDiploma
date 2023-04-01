@@ -24,18 +24,7 @@ class IndexController extends Controller
 
     public function index(Request $request): View
     {
-        $products = Product::latest()->paginate(6);
-
-        if ($request->ajax())
-        {
-            $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter([
-                'sort' => $request->sort,
-                'categoryIds' => $request->categoryIds,
-                'collectionIds' => $request->collectionIds
-            ])]);
-            $products = Product::filter($filter)->paginate(6);
-            return view('includes.gallery.products', compact('products'));
-        }
+        $products = Product::filtered()->sorted()->paginate(6);
 
         return view('index', compact('products'));
     }

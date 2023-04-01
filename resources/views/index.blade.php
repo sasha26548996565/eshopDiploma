@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('custom_js')
-    @include('includes.ajax.sort')
-@endsection
-
 @section('content')
     <main>
         <div class="wrapper">

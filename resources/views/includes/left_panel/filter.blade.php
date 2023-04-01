@@ -12,13 +12,17 @@
             <form class="left-form-filter" method="get"  action="">
                 @foreach ($categories as $category)
                     <li>
-                        <input class="category" type="checkbox" data-id="{{ $category->id }}" id="id_sheep">
+                        <input name="filters[categories][{{ $category->id }}]"
+                            value="{{ $category->id }}" @checked(request('filters.categories.' . $category->id))
+                                class="category" type="checkbox" id="id_sheep">
                         <label class="" for="id_sheep">{{ $category->name }}</label>
                     </li>
                 @endforeach
                 @foreach ($collections as $collection)
                     <li>
-                        <input class="collection" type="checkbox" data-id="{{ $collection->id }}" id="id_sheep">
+                        <input name="filters[collections][{{ $collection->id }}]"
+                            value="{{ $collection->id }}" @checked(request('filters.collections' . $collection->id))
+                                class="collection" type="checkbox" id="id_sheep">
                         <label class="" for="id_sheep">{{ $collection->name }}</label>
                     </li>
                 @endforeach
@@ -29,12 +33,14 @@
                     <div class="price-input">
                         <div class="field">
                             <span>Мин.</span>
-                            <input type="number" class="input-min" value="2500">
+                            <input type="number" name="filters[price][from]" class="input-min"
+                                value="{{ request('filters.price.from', 0) }}">
                         </div>
                         <div class="separator">-</div>
                         <div class="field">
                             <span>Макс.</span>
-                            <input type="number" class="input-max" value="7500">
+                            <input type="number" name="filters[price][to]" class="input-max"
+                                value="{{ request('filters.price.to', 100000) }}">
                         </div>
                     </div>
                     <div class="slider">
@@ -47,7 +53,7 @@
                 </div>
                 <div  class="filter-buttons-container">
                     <button type="submit" class="apply-filter">Применить</button>
-                    <button type="button" class="reset-filter">Сбросить</button>
+                    <a type="button" href="{{ route(request()->route()->getName()) }}" class="reset-filter">Сбросить</a>
                 </div>
             </form>
         </div>

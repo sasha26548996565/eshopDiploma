@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "mehradsadeghi/laravel-filter-querystring": "^1.1",
         "torann/currency": "^1.1"
     },
     "require-dev": {
