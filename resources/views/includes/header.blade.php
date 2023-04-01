@@ -1,40 +1,24 @@
 <header>
     <div class="header-top">
         <span class="header-top-phone">
-            <form method="post">
-                <div class="field--select">
-                    <div class="langMenuLbl">Currency <div class="language--flag de_DE">
-                        {{ currency()->getCurrency(currency()->getUserCurrency())['code'] }}
-                    </div>
-                    </div>
-                    <div class="select-field">
-                        <select class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
-                            <option value="">change</option>
-                            @foreach (currency()->getCurrencies() as $currency)
-                                <option value="{{ route('main.switchCurrency', $currency['code']) }}">
-                                    {{ $currency['code'] }} {{ $currency['symbol'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </form>
+            Currency {{ currency()->getCurrency(currency()->getUserCurrency())['code'] }}
+            <select class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
+                <option value="">change</option>
+                @foreach (currency()->getCurrencies() as $currency)
+                    <option value="{{ route('main.switchCurrency', $currency['code']) }}">
+                        {{ $currency['code'] }} {{ $currency['symbol'] }}
+                    </option>
+                @endforeach
+            </select>
         </span>
         <span class="header-top-phone">
-            <form method="post">
-                <div class="field--select">
-                    <div class="langMenuLbl">Language <div class="language--flag de_DE">Deutsch</div>
-                    </div>
-                    <div class="select-field">
-                        <select name="__shop" class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
-                            <option value="">change</option>
-                            @foreach (config('app.languages') as $language)
-                                <option value="{{ route('main.switchLanguage', $language) }}">{{ $language }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </form>
+            Language {{ app()->currentLocale() }}
+            <select name="__shop" class="language--select" data-auto-submit="true" onchange="window.location.href=this.value;">
+                <option value="">change</option>
+                @foreach (config('app.languages') as $language)
+                    <option value="{{ route('main.switchLanguage', $language) }}">{{ $language }}</option>
+                @endforeach
+            </select>
         </span>
         <span class="header-top-email">niciby@gmail.com</span>
     </div>
