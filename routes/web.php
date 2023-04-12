@@ -7,6 +7,7 @@ Route::namespace('App\Http\Controllers\Main')->middleware('localization')->name(
     Route::get('/', 'IndexController@index')->name('index');
     Route::get('/switch-currency/{currency}', 'CurrencyController@switchCurrency')->name('switchCurrency');
     Route::get('/switch-language/{language}', 'LocalizationController@switchLanguage')->name('switchLanguage');
+    Route::get('/product/{article}', 'ProductController@show')->name('product.show');
 });
 
 Auth::routes();

@@ -8,23 +8,22 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use App\Services\SortService;
+use App\Http\Filters\ProductFilter;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Http\Filters\ProductFilter;
-use App\Services\SortService;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class IndexController extends Controller
 {
-    private SortService $sortService;
-
-    public function __construct(SortService $sortService)
-    {
-        $this->sortService = $sortService;
-    }
-
     public function index(Request $request): View
     {
-        $products = Product::filtered()->sorted()->paginate(6);
+        $products = Product::query()->select(['id', 'title', 'description', 'price', 'properties', 'collection_id', 'article'])
+            ->when(request('search'), function (Builder $builder) {
+                $builder->whereFullText(['title', 'description'], request('search'));
+            })
+            ->filtered()->sorted()
+            ->paginate(6);
 
         return view('index', compact('products'));
     }

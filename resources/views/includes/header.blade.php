@@ -130,9 +130,9 @@
             </nav>
             <!-- Header: Горизонтальное меню: Поиск -->
             <div class="header-menu-search">
-                <form action="/search" method="get" class="search-form">
-                    <input type="search" name="sSearch" aria-label="{{ __('header.search') }}" class="search-field"
-                        autocomplete="off" autocapitalize="off" placeholder="{{ __('header.search') }}" />
+                <form action="{{ route('main.index') }}" method="get" class="search-form">
+                    <input type="search" name="search" aria-label="{{ __('header.search') }}" class="search-field"
+                        autocomplete="off" value="{{ request('search') }}" autocapitalize="off" placeholder="{{ __('header.search') }}" />
                     <button type="submit" name="" value="" class="search-submit">
                         <img class="search-image" src="images/search-icon.svg" alt="Go">
                     </button>

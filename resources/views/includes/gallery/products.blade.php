@@ -1,7 +1,7 @@
 <ul id="imgBlock" class="layout_four_column">
     @foreach ($products as $product)
         <li class="img_block">
-            <a href="" class="link-img-product">
+            <a href="{{ route('main.product.show', $product->article) }}" class="link-img-product">
                 <div class="img-product">
                     <img class="img" src="images/goods/48531_01_HA_Frei.jpg" alt="" />
                 </div>

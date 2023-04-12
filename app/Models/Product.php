@@ -6,16 +6,19 @@ namespace App\Models;
 
 use App\Models\Category;
 use App\Models\Collection;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Attributes\SearchUsingFullText;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'article', 'title', 'description', 'price', 'category_id', 'collection_id', 'picture', 'discount', 'properties',
@@ -35,6 +38,11 @@ class Product extends Model
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class, 'collection_id', 'id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class, 'product_id', 'id');
     }
 
     public function price(): Attribute
@@ -79,5 +87,14 @@ class Product extends Model
 
         $priceWithDiscount = $this->price - ($this->price * $this->discount / 100);
         return $priceWithDiscount;
+    }
+
+    #[SearchUsingFullText(['title', 'description'])]
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description
+        ];
     }
 }
