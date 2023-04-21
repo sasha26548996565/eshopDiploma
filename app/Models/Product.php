@@ -7,9 +7,9 @@ namespace App\Models;
 use App\Models\Category;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -44,27 +44,14 @@ class Product extends Model
         );
     }
 
-    public function scopeFiltered(Builder $builder): void
+    public function scopePriceFrom(Builder $builder, $value): Builder
     {
-        $builder->when(request('filters.categories'), function (Builder $query) {
-            $query->whereIn('category_id', request('filters.categories'));
-        })->when(request('filters.collections'), function (Builder $query) {
-            $query->whereIn('collection_id', request('filters.collections'));
-        })->when(request('filters.price'), function (Builder $query) {
-            $query->whereBetween('price', [request('filters.price.from') * 100, request('filters.price.to') * 100]);
-        });
+        return $builder->where('price', '>=', $value * 100);
     }
 
-    public function scopeSorted(Builder $builder): void
+    public function scopePriceTo(Builder $builder, $value): Builder
     {
-        $builder->when(request('sort'), function (Builder $query) {
-            $column = request()->str('sort');
-            if ($column->contains(self::ALLOWED_SORTING))
-            {
-                $direction = $column->contains('-') ? 'DESC' : 'ASC';
-                $query->orderBy((string) $column->remove('-'), $direction);
-            }
-        });
+        return $builder->where('price', '<=', $value * 100);
     }
 
     public function issetDiscount(): bool
