@@ -14,11 +14,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Laravel\Scout\Attributes\SearchUsingFullText;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes, Searchable, Discountable, Priceable;
 
     protected $fillable = [
         'article', 'title', 'description', 'price', 'category_id', 'collection_id', 'picture', 'discount', 'properties',
@@ -38,47 +37,8 @@ class Product extends Model
         return $this->belongsTo(Collection::class, 'collection_id', 'id');
     }
 
-    public function price(): Attribute
+    public function images(): HasMany
     {
-        return Attribute::make(
-            get: fn($value) => $value / 100
-        );
-    }
-
-    public function scopeFiltered(Builder $builder): void
-    {
-        $builder->when(request('filters.categories'), function (Builder $query) {
-            $query->whereIn('category_id', request('filters.categories'));
-        })->when(request('filters.collections'), function (Builder $query) {
-            $query->whereIn('collection_id', request('filters.collections'));
-        })->when(request('filters.price'), function (Builder $query) {
-            $query->whereBetween('price', [request('filters.price.from') * 100, request('filters.price.to') * 100]);
-        });
-    }
-
-    public function scopeSorted(Builder $builder): void
-    {
-        $builder->when(request('sort'), function (Builder $query) {
-            $column = request()->str('sort');
-            if ($column->contains(self::ALLOWED_SORTING))
-            {
-                $direction = $column->contains('-') ? 'DESC' : 'ASC';
-                $query->orderBy((string) $column->remove('-'), $direction);
-            }
-        });
-    }
-
-    public function issetDiscount(): bool
-    {
-        return $this->discount == 0 ? false : true;
-    }
-
-    public function getPriceWithDiscount(): float
-    {
-        if ($this->discount == 0)
-            return $this->price;
-
-        $priceWithDiscount = $this->price - ($this->price * $this->discount / 100);
-        return $priceWithDiscount;
+        return $this->hasMany(Image::class, 'product_id', 'id');
     }
 }

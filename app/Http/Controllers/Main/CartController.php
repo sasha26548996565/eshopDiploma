@@ -8,8 +8,8 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
-use Darryldecode\Cart\Facades\CartFacade;
 use App\Http\Requests\Main\Cart\AddRequest;
+use Darryldecode\Cart\Facades\CartFacade;
 
 class CartController extends Controller
 {
@@ -20,14 +20,15 @@ class CartController extends Controller
 
         $params = $request->validated();
         $product = Product::findOrFail($params['product_id']);
-        $cart = CartFacade::add(session()->get('cartId'))->add([
+        $cart = CartFacade::session(session()->get('cartId'))->add([
             'id' => $product->id,
             'name' => $product->title,
             'price' => $product->price,
-            'quantity' => $product->quantity,
             'attributes' => [
                 'article' => $product->article,
-                'image_preview' => $product
+                'description' => $product->description,
+                'discount' => $product->discount,
+                'images' => $product->images
             ]
         ]);
         return response()->json();
