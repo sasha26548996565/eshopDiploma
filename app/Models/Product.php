@@ -8,9 +8,9 @@ use App\Models\Category;
 use App\Models\Collection;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Product\Priceable;
+use App\Models\Traits\Product\Discountable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,8 +28,6 @@ class Product extends Model
         'properties' => 'array',
     ];
 
-    public const ALLOWED_SORTING = ['title', 'price'];
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -38,11 +36,6 @@ class Product extends Model
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class, 'collection_id', 'id');
-    }
-
-    public function images(): HasMany
-    {
-        return $this->hasMany(Image::class, 'product_id', 'id');
     }
 
     public function price(): Attribute
@@ -87,14 +80,5 @@ class Product extends Model
 
         $priceWithDiscount = $this->price - ($this->price * $this->discount / 100);
         return $priceWithDiscount;
-    }
-
-    #[SearchUsingFullText(['title', 'description'])]
-    public function toSearchableArray()
-    {
-        return [
-            'title' => $this->title,
-            'description' => $this->description
-        ];
     }
 }
