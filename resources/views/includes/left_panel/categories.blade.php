@@ -30,11 +30,6 @@
                 @foreach ($collections as $collection)
                     <li><a href="#">{{ $collection->name }} </a></li>
                 @endforeach
-                <!-- <li><a href="#">Овечки Jolly Mäh</a></li>
-                <li><a href="#">Единорог Theodor и его друзья</a></li>
-                <li><a href="#">Лесные жители</a></li>
-                <li><a href="#">Дикие обитатели</a></li>
-                <li><a href="#">Веселая ферма</a></li> -->
             </nav>
         </div>
     </div>

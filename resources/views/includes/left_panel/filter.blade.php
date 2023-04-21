@@ -21,7 +21,7 @@
                 @foreach ($collections as $collection)
                     <li>
                         <input name="filters[collections][{{ $collection->id }}]"
-                            value="{{ $collection->id }}" @checked(request('filters.collections' . $collection->id))
+                            value="{{ $collection->id }}" @checked(request('filters.collections.' . $collection->id))
                                 class="collection" type="checkbox" id="id_sheep">
                         <label class="" for="id_sheep">{{ $collection->name }}</label>
                     </li>
