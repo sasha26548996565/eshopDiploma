@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable, Discountable, Priceable;
+    use HasFactory, SoftDeletes, Discountable, Priceable;
 
     protected $fillable = [
         'article', 'title', 'description', 'price', 'category_id', 'collection_id', 'picture', 'discount', 'properties',
