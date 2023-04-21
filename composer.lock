@@ -5,10 +5,14 @@
         "This file is @generated automatically"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "content-hash": "5701b2b4acb1eced091e017b031da3a6",
 =======
     "content-hash": "0aa3f3c5287453a0a08e22151beb28d0",
 >>>>>>> filter
+=======
+    "content-hash": "0aa3f3c5287453a0a08e22151beb28d0
+>>>>>>> 51345c15894f1fdfe9f385b000aefdb00ea51a98
     "packages": [
         {
             "name": "brick/math",
