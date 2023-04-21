@@ -12,18 +12,21 @@ use App\Services\SortService;
 use App\Http\Filters\ProductFilter;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class IndexController extends Controller
 {
     public function index(Request $request): View
     {
-        $products = Product::query()->select(['id', 'title', 'description', 'price', 'properties', 'collection_id', 'article'])
-            ->when(request('search'), function (Builder $builder) {
-                $builder->whereFullText(['title', 'description'], request('search'));
-            })
-            ->filtered()->sorted()
-            ->paginate(6);
+        $products = QueryBuilder::for(Product::class)->allowedFilters(
+            AllowedFilter::exact('title'),
+            AllowedFilter::exact('article'),
+            AllowedFilter::exact('description'),
+            AllowedFilter::exact('category_id'),
+            AllowedFilter::scope('price_from'),
+            AllowedFilter::scope('price_to'),
+        )->paginate(6);
 
         return view('index', compact('products'));
     }
