@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Main;
 
 use App\Models\Product;
+use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Darryldecode\Cart\Facades\CartFacade;
@@ -14,11 +15,12 @@ use App\Http\Requests\Main\Cart\UpdateRequest;
 
 class CartController extends Controller
 {
-    // public function __contsruct()
-    // {
-    //     if (session()->get('cartId') == null)
-    //         session(['cartId' => uniqid()]);
-    // }
+    private CartService $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
 
     public function index(): JsonResponse
     {
@@ -33,13 +35,7 @@ class CartController extends Controller
 
         $params = $request->validated();
         $product = Product::findOrFail($params['product_id']);
-        $cart = CartFacade::session(session()->get('cartId'))->add([
-            'id' => $product->id,
-            'name' => $product->title,
-            'price' => $product->price,
-            'quantity' => $params['quantity'],
-            'associatedModel' => $product
-        ]);
+        $cart = $this->cartService->add(session()->get('cartId'), $product, $params['quantity']);
         return response()->json(['products' => $cart->getContent(), 'totalPrice' => $cart->getSubTotal()]);
     }
 
@@ -48,7 +44,7 @@ class CartController extends Controller
         $params = $request->validated();
         $product = Product::findOrFail($params['product_id']);
         $cart = CartFacade::session(session()->get('cartId'));
-        $cart->update($product->id, ['quantity' => ['relative' => false, 'value' => $params['quantity']]]);
+        $this->cartService->update($cart, $product->id, $params['quantity']);
         return response()->json(['products' => $cart->getContent()]);
     }
 
@@ -56,14 +52,14 @@ class CartController extends Controller
     {
         $params = $request->validated();
         $cart = CartFacade::session(session()->get('cartId'));
-        $cart->remove($params['product_id']);
+        $this->cartService->remove($cart, $params['product_id']);
         return response()->json(['products' => $cart->getContent()]);
     }
 
     public function clear(): JsonResponse
     {
         $cart = CartFacade::session(session()->get('cartId'));
-        $cart->clear();
+        $this->cartService->clear($cart);
         return response()->json(['Cart be clear successful!']);
     }
 }
